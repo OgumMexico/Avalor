@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_api_credit_avalor,access.api.credit.avalor,model_api_credit_avalor,base.group_user,1,1,1,1
+av_actividad_economica,av.actividad.economica,model_av_actividad_economica,base.group_user,1,1,1,1
+clip_preapproval,clip.preapproval,model_clip_preapproval,base.group_user,1,1,1,1
+clip_sendpreapproval,clip.sendpreapproval,model_clip_sendpreapproval,base.group_user,1,1,1,1
+account_loan_estadostp,account.loan.estadostp,model_account_loan_estadostp,base.group_user,1,1,1,1
+
+credito,credito,model_credito,base.group_user,1,1,1,1
+credito_score,credito.score,model_credito_score,base.group_user,1,1,1,1
+credito_consultas,credito.consultas,model_credito_consultas,base.group_user,1,1,1,1
+credito_empleos,credito.empleos,model_credito_empleos,base.group_user,1,1,1,1
+credito_domicilios,credito.domicilios,model_credito_domicilios,base.group_user,1,1,1,1
+credito_creditos,credito.creditos,model_credito_creditos,base.group_user,1,1,1,1
+
+

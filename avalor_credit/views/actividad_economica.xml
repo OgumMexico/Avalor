@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="view_actvi_econom_form" model="ir.ui.view">
+            <field name="name">av.actividad.economica.form</field>
+            <field name="model">av.actividad.economica</field>
+            <field name="arch" type="xml">
+                <form string="Actividades Economicas">
+                    <sheet>
+                    <group name="contenedor">
+                        <group name="lef">
+                            <field name="id_stp"/>
+                            <field name="name" track_visibility='onchange' string='Actividad Economica'/>
+                        </group>
+
+                        <group name="right">
+                        </group>
+                    </group>
+                    </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+              </form>
+            </field>
+        </record>
+        <record id="view_tree_actvi_econom" model="ir.ui.view">
+            <field name="name">av.actividad.economica.tree</field>
+            <field name="model">av.actividad.economica</field>
+            <field name="arch" type="xml">
+
+               <tree>
+                    <field name="id_stp"/>
+                    <field name="name"/>
+               </tree>
+
+            </field>
+        </record>
+         <record model="ir.actions.act_window" id="act_actvi_econom">
+            <field name="name">Catalogo de Actividades Economicas</field>
+            <field name="res_model">av.actividad.economica</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id"  ref="view_tree_actvi_econom"/>
+
+         </record>
+
+         <menuitem id="submenu_activ" name="Catalogo de Actividades Economicas"
+                   groups="base.group_system"
+                   sequence="4" parent="contacts.res_partner_menu_config"
+                   action="act_actvi_econom"/>
+                <!--                   parent="contacts.menu_contacts" -->
+    </data>
+</odoo>

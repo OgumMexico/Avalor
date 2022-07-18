@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<odoo>
+    <record id="seq_partner_merchant" model="ir.sequence">
+        <field name="name">Secuencia Merchant</field>
+        <field name="code">partner.merchant</field>
+        <field name="prefix"></field>
+        <field name="padding">6</field>
+    </record>
+</odoo>
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="stp_res_company" model="ir.ui.view">
+        <field name="name">res.company.template</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='logo']" position="before">
+                   <div class="oe_button_box" >
+                        <button name="cosuta_saldoSTP" class="oe_stat_button" icon="fa-file-text"
+                            string="Consulta de Saldo Historico"  type="object"/>
+                         <button name="cosuta_saldoHSTP" class="oe_stat_button" icon="fa-file-text"
+                            string="Consulta de Saldo Historico"  type="object"/>
+                   </div>
+            </xpath>
+
+            <xpath expr="//page[last()]" position="after">
+                <page string="STP" >
+                        <group name="contenedor">
+                            <group name="lef">
+                                <field name="name_stp"/>
+                                <field name="type_cuenta"/>
+
+                            </group>
+
+                            <group name="right">
+                                <field name="clabe_inti"/>
+                                <field name="cuentaOrdenante"/>
+                            </group>
+                        </group>
+                        <group name="cuenta_STP" string="Ajuste de Cuantas">
+                            <group name="lef">
+                                <field name="stp"/>
+                                <field name="stp_pais"/>
+
+                            </group>
+
+                            <group name="right">
+                                <field name="stp_clinte"/>
+                                <field name="stp_producto"/>
+                            </group>
+                        </group>
+                    </page>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

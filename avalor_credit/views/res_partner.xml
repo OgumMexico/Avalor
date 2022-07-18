@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+            <record id="av_res_partner" model="ir.ui.view">
+                <field name="name">res.partner.av.form</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="base.view_partner_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//div[@class='oe_button_box']" position="inside">
+                         <button name="Get_reportcredit" class="oe_stat_button" icon="fa-file-text"
+                            string="Generar Reporte de Historial Crediticio"  type="object"/>
+
+                        <button name="noaprobado_clip" class="oe_stat_button" icon="fa-file-text"
+                            string="No Aprobado"  type="object"/>
+
+                        <button name="aprobado_clip" class="oe_stat_button" icon="fa-file-text"
+                            string="Aprobado"  type="object"/>
+
+                        <button name="firma_clip" class="oe_stat_button" icon="fa-file-text"
+                            string="Afirmar Contrato"  type="object"/>
+
+
+                     </xpath>
+                    <field name="street2" position="after" >
+                        <field name="colonia" placeholder="Colonia..." />
+                        <field name="delegacion" placeholder="Delegacion Municipio..." />
+
+                    </field>
+                    <field name="vat" position="after" >
+                        <field name="cuenta_clabe_stp" />
+                        <field name="status_sclip" />
+                        <field name="process_sclip" />
+                        <field name="number_adi" />
+                        <field name="curp" />
+                        <field name="merchan_id" />
+                        <field name="merchan" />
+                        <field name="ofert_clip" />
+                        <field name="ac_economic" />
+                        <field name="ine_pasas" />
+                        <field name="ine" />
+                        <field name="comp_domi" />
+                        <field name="status_send_clip" />
+                        <field name="status_send_meta" />
+
+                    </field>
+
+                    <xpath expr="//field[@name='bank_ids']//tree/field[@name='bank_id']" position="after">
+                        <field name="bankname" />
+                        <field name="type_cuenta" />
+                        <field name="clabe_inti" />
+
+
+                    </xpath>
+                    <xpath expr="//page[last()]" position="after">
+                        <page string="CIRCULO DE CREDITO" >
+                            <group name="Datos">
+                                <group>
+                                    <field name="primerNombre"/>
+                                    <field name="apellidoPaterno" />
+                                    <field name="apellidoMaterno" />
+                                    <field name="fechaNacimiento" />
+                                    <field name="nacionalidad" />
+                                </group>
+                                <group>
+                                </group>
+
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="credito_id" string="" widget="section_and_note_one2many" mode="tree,kanban">
+                                        <tree decoration-danger="declaracionesConsumidor" decoration-success="folioConsulta" create="0" delete="0">
+
+                                            <field name="folioConsulta" />
+                                            <field name="folioConsultaOtorgante" optional="hide"/>
+                                            <field name="claveOtorgante" optional="show"/>
+                                            <field name="declaracionesConsumidor" optional="hide"/>
+                                        </tree>
+                                    </field>
+
+                                </group>
+                                <group>
+                                    <field name="score_id" string="" widget="section_and_note_one2many" mode="tree,kanban">
+                                        <tree create="0" delete="0">
+
+                                            <field name="name" />
+                                            <field name="valor"/>
+                                            <field name="razones" optional="show"/>
+
+                                        </tree>
+                                    </field>
+                                </group>
+
+                            </group>
+                            <group sting="Consultas">
+                                    <field name="consultas_id" string="" widget="section_and_note_one2many" mode="tree,kanban">
+                                        <tree create="0" delete="0">
+
+                                            <field name="fechaConsulta" />
+                                            <field name="nombreOtorgante" />
+                                            <field name="telefonoOtorgante" />
+                                            <field name="tipoCredito" optional="show"/>
+                                            <field name="claveUnidadMonetaria" optional="hide"/>
+                                            <field name="importeCredito" optional="show"/>
+                                        </tree>
+                                    </field>
+                            </group>
+                             <group  sting="Empleos">
+                                    <field name="empleos_id" string="" widget="section_and_note_one2many" mode="tree,kanban">
+                                        <tree create="0" delete="0">
+
+                                            <field name="nombreEmpresa" />
+                                            <field name="direccion" />
+                                            <field name="coloniaPoblacion" optional="hide"/>
+                                            <field name="delegacionMunicipio" optional="hide"/>
+                                            <field name="ciudad" optional="show"/>
+                                            <field name="estado" optional="hide"/>
+                                            <field name="CP" optional="hide"/>
+                                            <field name="numeroTelefono" optional="show"/>
+                                            <field name="extension" optional="hide"/>
+                                            <field name="puesto" optional="show"/>
+                                            <field name="fechaContratacion" string="Contratacion" optional="show"/>
+                                            <field name="claveMoneda" optional="hide"/>
+                                            <field name="salarioMensual" optional="show"/>
+                                            <field name="fechaUltimoDiaEmpleo" optional="hide"/>
+                                            <field name="fechaVerificacionEmpleo" optional="hide"/>
+                                        </tree>
+                                    </field>
+                            </group>
+                             <group  sting="Domicilio">
+                                    <field name="domicilios_id" string="" widget="section_and_note_one2many" mode="tree,kanban" >
+                                        <tree create="0" delete="0">
+
+                                            <field name="direccion" />
+                                            <field name="coloniaPoblacion" optional="hide"/>
+                                            <field name="delegacionMunicipio"  optional="hide"/>
+                                            <field name="ciudad"/>
+                                            <field name="estado" optional="show"/>
+                                            <field name="CP" optional="hide"/>
+                                            <field name="fechaResidencia" optional="hide"/>
+                                            <field name="fechaRegistroDomicilio" optional="show"/>
+
+                                        </tree>
+                                    </field>
+                            </group>
+                             <group  sting="Creditos">
+                                    <field name="creditos_id" string="" widget="section_and_note_one2many" mode="tree,kanban">
+                                        <tree decoration-danger="numeroPagosVencidos" decoration-success="numeroPagos" create="0" delete="0">
+
+                                            <field name="fechaActualizacion" />
+                                            <field name="registroImpugnado" optional="hide"/>
+                                            <field name="nombreOtorgante" />
+                                            <field name="cuentaActual" />
+                                            <field name="tipoResponsabilidad" optional="hide"/>
+                                            <field name="tipoCuenta" optional="show"/>
+                                            <field name="tipoCredito" optional="show"/>
+                                            <field name="claveUnidadMonetaria" optional="hide"/>
+                                            <field name="valorActivoValuacion" optional="hide"/>
+                                            <field name="numeroPagos" optional="hide"/>
+                                            <field name="frecuenciaPagos" />
+                                            <field name="montoPagar" />
+                                            <field name="fechaAperturaCuenta" />
+                                            <field name="fechaUltimoPago" optional="hide"/>
+                                            <field name="fechaUltimaCompra" optional="hide"/>
+                                            <field name="fechaCierreCuenta" optional="hide"/>
+                                            <field name="fechaReporte" optional="hide"/>
+                                            <field name="garantia" optional="hide"/>
+                                            <field name="creditoMaximo" optional="hide"/>
+                                            <field name="saldoActual" />
+                                            <field name="limiteCredito" optional="show"/>
+                                            <field name="saldoVencido" optional="show"/>
+                                            <field name="numeroPagosVencidos" optional="hide"/>
+                                            <field name="historicoPagos" />
+                                            <field name="clavePrevencion" optional="hide"/>
+                                            <field name="totalPagosReportados" optional="show"/>
+                                            <field name="peorAtraso" optional="hide"/>
+                                            <field name="fechaPeorAtraso" optional="hide"/>
+                                            <field name="saldoVencidoPeorAtraso" optional="hide"/>
+                                            <field name="montoUltimoPagoid" optional="hide"/>
+                                        </tree>
+                                    </field>
+                            </group>
+                        </page>
+                    </xpath>
+                </field>
+            </record>
+
+
+
+            <record id="av_res_partner_tree" model="ir.ui.view">
+                <field name="name">view.res.partner.av.tree</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="base.view_partner_tree"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='phone']" position="after">
+                        <field name="ac_economic" />
+                    </xpath>
+                </field>
+            </record>
+<!--        modificacion a paises-->
+             <record id="av_res_country" model="ir.ui.view">
+                <field name="name">res.country.av.form</field>
+                <field name="model">res.country</field>
+                <field name="inherit_id" ref="base.view_country_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='phone_code']" position="after">
+                        <field name="id_stp" />
+                    </xpath>
+                </field>
+            </record>
+</odoo>

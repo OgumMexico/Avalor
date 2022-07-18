@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="av_account_loan" model="ir.ui.view">
+                <field name="name">account.loan.av.form</field>
+                <field name="model">account.loan</field>
+                <field name="inherit_id" ref="account_loan.account_loan_form"/>
+
+                <field name="arch" type="xml">
+                     <xpath expr="//div[@class='oe_button_box']" position="inside">
+
+                         <button name="firmado_clip" class="oe_stat_button" icon="fa-file-text"
+                            string="Contrato Firmado"  type="object"/>
+                         <button name="apagar_clip" class="oe_stat_button" icon="fa-file-text"
+                            string="A Desembolso"  type="object"/>
+                         <button name="pagado_clip" class="oe_stat_button" icon="fa-file-text"
+                            string="Desembolso Exitoso"  type="object"/>
+
+                         <button name="cosuta_saldoSTP" class="oe_stat_button" icon="fa-file-text"
+                            string="Consulta de Saldo"  type="object"/>
+
+                         <button name="get_collections" class="oe_stat_button" icon="fa-file-text"
+                            string="Consultar de Pagos CLIP"  type="object"/>
+
+                         <button
+                            type="object"
+                            class="oe_stat_button"
+                            name="open_payments"
+                            icon="fa-usd"
+                            >
+                            <div class="o_field_widget o_stat_info">
+
+                                <span class="o_stat_text">Pagos</span>
+                            </div>
+                        </button>
+                     </xpath>
+                     <xpath expr="//header" position="inside">
+                        <button name="regitroSTP" type="object" string="Registrar Orden STP" />
+                        <button name="loan_CLIP" type="object" string="Crear Prestamo Clip" />
+                        <button name="get_loan_clip" type="object" string="Get Prestamo Clip" />
+
+
+                        <button name="action_invoice_register_payment" id="account_invoice_payment_btn"
+                                type="object" class="oe_highlight"
+                                string="Registrar Pago"
+                                />
+
+<!--                         attrs="{'invisible': [ ('state', '!=', 'posted')]}"-->
+                     </xpath>
+                    <!-- <field name="company_id" position="before" >
+                        <field name="loan_id" />
+                     </field>-->
+                    <field name="loan_amount" position="after" >
+                        <field name="pay_periodo" />
+                    </field>
+                    <field name="rate_period" position="after" >
+                        <field name="tasa" />
+                    </field>
+                    <xpath expr="//notebook" position="before" >
+                        <group name="STP">
+                            <group name="lef">
+                                <field name="ref_numerica" />
+                                <field name="claveRastreo" />
+                                <field name="cuentaOrdenante" />
+                                <field name="conceptoPago" />
+                            </group>
+                            <group name="ride">
+                                <field name="fecha_dipersion" />
+                                <field name="fecha_contrato" />
+                                <field name="loan_id" />
+                                <field name="loan_id_stp" />
+                                <field name="resut_stp_json" />
+                            </group>
+                        </group>
+                    </xpath>
+                    <xpath expr="//page[last()]" position="after">
+                        <page string="Cambios de Estados STP" >
+                            <group name="contenedor">
+                                <field name="estado_loan" string="">
+                                <tree decoration-danger="causaDevolucion" decoration-success="accountloan_id" create="0" delete="0">
+                                    <field name="id_stp" optional="show"/>
+                                    <field name="name"/>
+                                    <field name="estado" optional="show"/>
+                                    <field name="accountloan_id" optional="hide"/>
+                                    <field name="causaDevolucion" optional="show"/>
+                                    <field name="tsLiquidacion" optional="show"/>
+                                </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </xpath>
+                </field>
+            </record>
+
+
+
+<!--            Cambios de estados-->
+        <record id="view_estado_loand_form" model="ir.ui.view">
+            <field name="name">account.loan.estadostp.form</field>
+            <field name="model">account.loan.estadostp</field>
+            <field name="arch" type="xml">
+                <form string="Cambios de Estado">
+                    <sheet>
+                    <group name="contenedor">
+                        <group name="lef">
+                            <field name="name"  string='Nombre'/>
+                            <field name="folioOrigen" track_visibility='onchange'/>
+                            <field name="accountloan_id"/>
+                            <field name="accountloan_id"/>
+                            <field name="causaDevolucion"/>
+                        </group>
+
+                        <group name="right">
+                            <field name="id_stp"/>
+                            <field name="empresa"/>
+                            <field name="estado"/>
+                            <field name="tsLiquidacion"/>
+
+                        </group>
+                    </group>
+                    </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+              </form>
+            </field>
+        </record>
+
+        <record id="view_tree_loand_estado" model="ir.ui.view">
+            <field name="name">account.loan.estadostp.tree</field>
+            <field name="model">account.loan.estadostp</field>
+            <field name="arch" type="xml">
+
+               <tree>
+                   <field name="name"/>
+                   <field name="accountloan_id"/>
+                    <field name="id_stp"/>
+                    <field name="folioOrigen"/>
+                    <field name="estado"/>
+
+               </tree>
+
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_loand_estado">
+            <field name="name">Cambios de Estados</field>
+            <field name="res_model">account.loan.estadostp</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id"  ref="view_tree_loand_estado"/>
+
+         </record>
+
+
+
+        <menuitem id="account_loan_submenu"
+              name="Cambios de Estados" groups="base.group_system"
+              parent="account_loan.account_loan_menu" sequence="2"
+              action="act_loand_estado" />
+
+
+
+        <record id="av_account_payment" model="ir.ui.view">
+                <field name="name">account.payment.form</field>
+                <field name="model">account.payment</field>
+                <field name="inherit_id" ref="account.view_account_payment_form"/>
+
+                <field name="arch" type="xml">
+                     <xpath expr="//div[@class='oe_button_box']" position="inside">
+
+                         <button name="post_collections" class="oe_stat_button" icon="fa-dollar"
+                            string="Post collection CLIP"  type="object"/>
+
+                     </xpath>
+                     <xpath expr="//header" position="inside">
+<!--                        <button name="regitroSTP" type="object" string="Envio a STP" />-->
+                     </xpath>
+                    <field name="amount" position="after" >
+                        <field name="capital" />
+                        <field name="interest" />
+                        <field name="tax" />
+                    </field>
+                    <field name="journal_id" position="after" >
+                        <field name="accountloan_id" />
+                    </field>
+
+                      <xpath expr="//sheet" position="inside">
+                        <notebook >
+                            <page name="info_cdfi" string="integracion" >
+                            <group cols="4">
+                                <group string="STP">
+                                    <field name="institucionOrdenante" />
+                                    <field name="institucionBeneficiaria" />
+                                    <field name="claveRastreo" />
+                                    <field name="nombreOrdenante" />
+                                    <field name="cuentaOrdenante" />
+                                    <field name="nombreBeneficiario" />
+                                    <field name="cuentaBeneficiario" />
+                                    <field name="conceptoPago" />
+                                    <field name="referenciaNumerica" />
+                                    <field name="tipoPago" />
+                                    <field name="tsLiquidacion" />
+                                    <field name="folioCodi" />
+                                </group>
+                                <group string="Clip">
+                                    <field name="collection_id" />
+                                    <field name="origin" />
+                                    <field name="source" />
+                                    <field name="overdue_interest" />
+                                    <field name="collection_id_origin" />
+                                </group>
+                            </group>
+                            </page>
+                        </notebook>
+                      </xpath>
+
+                </field>
+            </record>
+
+<!--            Cambios de estados-->
+
+    </data>
+</odoo>

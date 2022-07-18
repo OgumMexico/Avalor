@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_clip_preapproval_form" model="ir.ui.view">
+            <field name="name">clip.preapproval.form</field>
+            <field name="model">clip.preapproval</field>
+            <field name="arch" type="xml">
+                <form string="Ofertas de Merchans">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                             <field name="name"  placeholder='Nombre de Oferta'/></h1>
+                        </div>
+                    <group name="contenedor">
+                        <group name="lef">
+                            <field name="send_ofer" />
+                            <field name="amount"  />
+                            <field name="interestp"  />
+                            <field name="interest"  />
+                            <field name="tax"  />
+                            <field name="payback"  />
+                            <field name="company_id"  />
+
+                        </group>
+
+                        <group name="right">
+                            <field name="term_maximum"  />
+                            <field name="retention_percentage_sale"  />
+                            <field name="expiration_at"  />
+                            <field name="type"  />
+                            <field name="pre_approval_id"  />
+                            <field name="provider_code"  />
+                        </group>
+                    </group>
+                    </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+              </form>
+            </field>
+        </record>
+        <record id="view_clip_preapproval_tree" model="ir.ui.view">
+            <field name="name">clip.preapproval.tree</field>
+            <field name="model">clip.preapproval</field>
+            <field name="arch" type="xml">
+
+               <tree>
+
+                    <field name="name"/>
+                    <field name="amount"  />
+                    <field name="interestp"  />
+                    <field name="interest"  />
+                    <field name="tax"  />
+                    <field name="payback"  />
+                    <field name="expiration_at"  />
+               </tree>
+
+            </field>
+        </record>
+         <record model="ir.actions.act_window" id="act_clip_preapproval">
+            <field name="name">Ofertas</field>
+            <field name="res_model">clip.preapproval</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id"  ref="view_clip_preapproval_tree"/>
+
+         </record>
+
+<!--        Envio de ofetas-->
+        <record id="view_clip_sendpreapproval_form" model="ir.ui.view">
+            <field name="name">clip.sendpreapproval.form</field>
+            <field name="model">clip.sendpreapproval</field>
+            <field name="arch" type="xml">
+                <form string="Ofertas">
+                    <header>
+                        <button name="action_post" string="enviar" class="oe_highlight" type="object"  attrs="{'invisible': [('state', '!=', 'espera')]}"/>
+                        <button name="update_post" string="Actualizar" class="oe_highlight" type="object"  attrs="{'invisible': [('state', '!=', 'send')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="espera,send"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                             <field name="name"  placeholder='Nombre'/></h1>
+                        </div>
+                    <group name="contenedor">
+                        <group name="lef">
+                            <field name="date"  />
+                            <field name="date_c"  />
+                        </group>
+                        <group name="right">
+                            <field name="merchan"  />
+                            <field name="company_id"  />
+                        </group>
+                    </group>
+                    <group name="contenedor">
+                        <field name="ofertas"  />
+                    </group>
+                         <group >
+                        <field name="result"  />
+                    </group>
+                    </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+              </form>
+            </field>
+        </record>
+         <record id="view_clip_sendpreapproval_tree" model="ir.ui.view">
+            <field name="name">clip.sendpreapproval.tree</field>
+            <field name="model">clip.sendpreapproval</field>
+            <field name="arch" type="xml">
+
+               <tree>
+
+                    <field name="name"/>
+                    <field name="date"  />
+                    <field name="ofertas"  />
+               </tree>
+
+            </field>
+        </record>
+         <record model="ir.actions.act_window" id="act_clip_sendpreapproval">
+            <field name="name">Ofertas a enviar</field>
+            <field name="res_model">clip.sendpreapproval</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id"  ref="view_clip_sendpreapproval_tree"/>
+
+         </record>
+         <menuitem id="submenu_activ_clip" name="Ofertas CLIP"
+                   groups="base.group_system"
+                   sequence="2" parent="contacts.menu_contacts"
+                   />
+
+        <menuitem id="send_ofetas" name="Envio de Ofertas"
+                   groups="base.group_system"
+                   sequence="0" parent="submenu_activ_clip"
+                   action="act_clip_sendpreapproval"/>
+
+        <menuitem id="clip_ofetas" name="Todas las Ofertas"
+                   groups="base.group_system"
+                   sequence="1" parent="submenu_activ_clip"
+                   action="act_clip_preapproval"/>
+
+
+        <record id="send_ofetas_comp_rule" model="ir.rule">
+            <field name="name">Ofertas a enviar</field>
+            <field name="model_id" ref="model_clip_sendpreapproval"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="clip_ofetas_comp_rule" model="ir.rule">
+            <field name="name">Ofertas</field>
+            <field name="model_id" ref="model_clip_preapproval"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+    </data>
+</odoo>

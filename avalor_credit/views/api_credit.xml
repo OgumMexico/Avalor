@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="api_credit_form_view" model="ir.ui.view">
+            <field name="name">api.credit.avalor.form</field>
+            <field name="model">api.credit.avalor</field>
+            <field name="arch" type="xml">
+                <form string="Instance" duplicate="0">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Instancia">
+                                <field name="is_test" widget="boolean_toggle"/>
+                                <field name="consumer_key" password="1"/>
+                                <field name="consumer_secret" password="1"/>
+                                <field name="api"/>
+                                <field name="url"/>
+                            </group>
+                            <group string="Documentos">
+                                <field name="archivo_key"/>
+                                <field name="archivo_cer"/>
+                                <field name="archivo_keypar"/>
+                            </group>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="api_credit_tree_view" model="ir.ui.view">
+            <field name="name">api.credit.avalor.tree</field>
+            <field name="model">api.credit.avalor</field>
+            <field name="arch" type="xml">
+                <tree string="Instances">
+                    <field name="name"/>
+                    <field name="api"/>
+                    <field name="is_test"/>
+                    <field name="url"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="api_overview_kanban" model="ir.ui.view">
+            <field name="name">api.credit.avalor.kanban</field>
+            <field name="model">api.credit.avalor</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard o_emphasize_colors o_stock_kanban" create="0">
+                    <field name="name"/>
+                    <field name="color"/>
+                    <field name="api"/>
+                    <field name="url"/>
+                    <field name="consumer_key"/>
+                    <field name="consumer_secret"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''}"
+                                 name="api_credit_avalor">
+                                <div>
+                                    <div t-attf-class="o_kanban_card_header">
+                                        <div class="o_kanban_card_header_title">
+                                            <div class="o_primary" t-if="!selection_mode">
+                                                <a type="object" name="get_instance">
+                                                    <field name="name"/>
+                                                </a>
+                                            </div>
+                                            <div class="o_primary" t-if="selection_mode">
+                                                <field name="name"/>
+                                            </div>
+                                        </div>
+                                        <div class="o_kanban_manage_button_section" t-if="!selection_mode">
+                                            <a class="o_kanban_manage_toggle_button" href="#">
+                                                <i class="fa fa-ellipsis-v" role="img" aria-label="Manage"
+                                                   title="Manage"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="container o_kanban_card_content" t-if="!selection_mode">
+                                        <div class="row">
+                                            <div class="col-6 o_kanban_primary_left">
+                                                <button class="btn btn-primary" name="get_wizard" type="object">
+                                                    <span>Probar Conexion</span>
+                                                </button>
+<!--                                                <button class="btn btn-primary" name="get_mesnsaje" type="object">-->
+<!--                                                    <span>Probar mjs</span>-->
+<!--                                                </button>-->
+                                            </div>
+                                            <div class="col-6 o_kanban_primary_right">
+                                                <field name="api"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 o_kanban_primary_left">
+
+                                            </div>
+                                            <div class="col-6 o_kanban_primary_right">
+                                                <span>Es Prueba </span> <field name="is_test" widget="boolean_toggle" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+                                        <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                            <div class="col-8" role="menuitem" aria-haspopup="true">
+                                                <ul class="oe_kanban_colorpicker" data-field="color" role="menu"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+         <record id="action_api_avalor_menu" model="ir.actions.act_window">
+            <field name="name">Apis Avalor</field>
+            <field name="res_model">api.credit.avalor</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Crear Apis De Conexion
+                </p>
+            </field>
+        </record>
+
+        <record id="action_api_overview_menu" model="ir.actions.act_window">
+            <field name="name">Overview</field>
+            <field name="res_model">api.credit.avalor</field>
+            <field name="view_mode">kanban</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Crear Apis De Conexion
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="api_avalor_menu" name="Apis Avalor"
+                  groups="base.group_user" web_icon="avalor_credit,static/description/icon.png"/>
+        <menuitem id="apicredit_submenu" name="Instance"
+                  parent="api_avalor_menu"
+                  sequence="2"
+                  action="action_api_avalor_menu"
+                  groups="base.group_user"/>
+
+        <menuitem id="woo_overview_submenu" name="Overview"
+                  parent="api_avalor_menu"
+                  sequence="1"
+                  action="action_api_overview_menu"
+                  groups="base.group_user"/>
+
+    </data>
+</odoo>
