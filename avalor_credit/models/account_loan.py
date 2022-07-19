@@ -109,6 +109,7 @@ class account_loan_integration(models.Model):
 
     merchan = fields.Char(string="Id Client")
     merchan_id = fields.Char(string="Proxy Merchant Token")
+    cuenta_clabe_stp = fields.Char(string="Cuanta Clabe")
     iva = fields.Monetary(string="iva")
 
     retencion = fields.Float(string="% de retencion")
