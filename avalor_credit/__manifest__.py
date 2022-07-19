@@ -12,6 +12,9 @@
     'depends': [
         'base',
         'account',
+        'open_api',
+        'base_api',
+        'account_loan',
     ],
     'data': [
         "data/ir_sequence_data.xml",
@@ -26,9 +29,19 @@
     ],
     'images': ['static/description/banner.png'],
     'license': 'OPL-1',
-    'price': 120,
+
     'currency': 'USA',
     'installable': True,
     'application': True,
     'auto_install': False,
+ "external_dependencies": {
+        "python": [
+            "numpy",
+            "numpy-financial<=1.0.0",
+            "bravado_core",
+            "swagger_spec_validator",
+            "bravado_core",
+            "pyjks",
+            "pyOpenSSL"
+        ]},
 }

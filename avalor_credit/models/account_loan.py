@@ -95,30 +95,35 @@ class account_loan_integration(models.Model):
     fecha_contrato = fields.Datetime(string="Fecha de Contrato")
     cuentaOrdenante = fields.Char(string="Cuenta de banco ASIGNADA")
     id_prestamo =fields.Char(string="Id Prestamo", store = True)
-    pay_periodo = fields.Monetary(
-        string="Pago por periodo", compute="get_pagos", store = True
-    )
+    pay_periodo = fields.Monetary(string="Pago por periodo", compute="get_pagos", store = True)
 
-    comision = fields.Monetary(
-        string="Comision"
-    )
+    comision = fields.Monetary(string="Comision")
 
-    pay_back = fields.Monetary(
-        string="Pay Back"
-    )
-    total_interes = fields.Monetary(
-        string="Total Interes"
-    )
-    tasa = fields.Float(
-        string="Tasa (anualizada)",compute="get_pagos", store = True
-    )
-    comision = fields.Float(
-        string="% Comision"
-    )
-    tir = fields.Float(
-        string="TIR"
-    )
+    pay_back = fields.Monetary(string="Pay Back")
+    total_interes = fields.Monetary(string="Total Interes")
+    tasa = fields.Float(string="Tasa (anualizada)", compute="get_pagos", store = True)
+    comision = fields.Float(string="% Comision")
+    tir = fields.Float(string="TIR Estimada")
+    tir_actual = fields.Float(string="TIR Actual")
+    tir_proyect = fields.Float(string="TIR Proyectada")
 
+    merchan = fields.Char(string="Id Client")
+    merchan_id = fields.Char(string="Proxy Merchant Token")
+    iva = fields.Monetary(string="iva")
+
+    retencion = fields.Float(string="% de retencion")
+    clasif_seg = fields.Char(string="Clasificación de Seguimiento")
+    coef_seg = fields.Char(string="Coeficiente de Seguimiento")
+    plazo_tranc = fields.Float(string="Plazo Transcurrido")
+    por_cobranza = fields.Float(string="% de Cobranza")
+    count_dias_ult_pago = fields.Integer(string="Días desde el último Pago")
+    date_lastpay = fields.Date(string="Fecha último pago")
+    days_before_pay = fields.Integer(string="Días para vencimiento")
+    tasa_mora = fields.Char(string="Tasa Moratorios")
+
+    total_pay = fields.Monetary(string="Capital Cobrado")
+    interes_pay = fields.Monetary(string="Interes Cobrado")
+    iva_pay = fields.Monetary(string="Iva Cobrado")
 
 
     @api.depends("loan_amount","rate","periods")
@@ -136,7 +141,6 @@ class account_loan_integration(models.Model):
                 tasa = (numpy_financial.rate(rec.periods,pay,rec.loan_amount*(-1),0) * (365/7)) * 100
             rec.tasa = tasa
             rec.pay_periodo = pay
-
 
     @api.depends("resut_stp_json")
     def get_idstp(self):
@@ -161,6 +165,10 @@ class account_loan_integration(models.Model):
                 monto = rec.partner_id.ofert_clip.amount
                 rec.loan_amount = monto
                 inter = rec.partner_id.ofert_clip.interest
+                rec.merchan = rec.partner_id.merchan
+                rec.merchan_id = rec.partner_id.merchan_id
+                rec.cuenta_clabe_stp = rec.partner_id.cuenta_clabe_stp
+                rec.cuentaOrdenante = rec.company_id.cuentaOrdenante
                 rec.rate = rec.partner_id.ofert_clip.interestp
 
     def open_payments(self):

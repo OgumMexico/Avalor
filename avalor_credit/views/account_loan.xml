@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
+        <record id="av_rempla_loand_form" model="ir.ui.view">
+             <field name="name">account.loan.av.form</field>
+                <field name="model">account.loan</field>
+                <field name="inherit_id" ref="account_loan.account_loan_form"/>
+
+                <field name="arch" type="xml">
+                    <xpath expr="//header" position="inside">
+                        <button name="regitroSTP" type="object" string="Registrar Orden STP" />
+                        <button name="loan_CLIP" type="object" string="Crear Prestamo Clip" />
+                        <button name="get_loan_clip" type="object" string="Get Prestamo Clip" />
+
+
+                        <button name="action_invoice_register_payment" id="account_invoice_payment_btn"
+                                type="object" class="oe_highlight"
+                                string="Registrar Pago"
+                                />
+
+<!--                         attrs="{'invisible': [ ('state', '!=', 'posted')]}"-->
+                     </xpath>
+                     <xpath expr="//sheet" position="inside">
+                        <div class="oe_button_box">
+                        <button
+                            name="view_account_moves"
+                            class="oe_stat_button"
+                            icon="fa-bars"
+                            attrs="{'invisible': [('state', '=', 'draft')]}"
+                            type="object"
+                            string="Moves"
+                        />
+                        <button
+                            name="view_account_invoices"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': ['|', ('state', '=', 'draft'), ('is_leasing', '=', False)]}"
+                            type="object"
+                            string="Invoices"
+                        />
+                        <button
+                            name="%(account_loan_pay_amount_action)d"
+                            class="oe_stat_button"
+                            icon="fa-usd"
+                            attrs="{'invisible': [('state', '!=', 'posted')]}"
+                            type="action"
+                            string="Pay amount"
+                        />
+                    </div>
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                         <group name="bloque_1">
+                             <group name="cliente">
+                                 <field name="id_prestamo" />
+                                 <field name="partner_id" />
+                                 <field name="loan_type" />
+
+                             </group>
+                             <group name="seguimiento">
+
+                             </group>
+                         </group>
+
+                     </xpath>
+                </field>
+        </record>
+
         <record id="av_account_loan" model="ir.ui.view">
                 <field name="name">account.loan.av.form</field>
                 <field name="model">account.loan</field>
@@ -33,19 +99,6 @@
                                 <span class="o_stat_text">Pagos</span>
                             </div>
                         </button>
-                     </xpath>
-                     <xpath expr="//header" position="inside">
-                        <button name="regitroSTP" type="object" string="Registrar Orden STP" />
-                        <button name="loan_CLIP" type="object" string="Crear Prestamo Clip" />
-                        <button name="get_loan_clip" type="object" string="Get Prestamo Clip" />
-
-
-                        <button name="action_invoice_register_payment" id="account_invoice_payment_btn"
-                                type="object" class="oe_highlight"
-                                string="Registrar Pago"
-                                />
-
-<!--                         attrs="{'invisible': [ ('state', '!=', 'posted')]}"-->
                      </xpath>
                     <!-- <field name="company_id" position="before" >
                         <field name="loan_id" />
