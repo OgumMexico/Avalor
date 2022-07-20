@@ -63,7 +63,7 @@ class AccountLoan(models.Model):
     partner_id = fields.Many2one(
         "res.partner",
         required=True,
-        string="Lender",
+        string="Clients Name",
         domain="[('company_id', '=', company_id)]",
         help="Company or individual that lends the money at an interest rate.",
         readonly=True,
@@ -115,6 +115,7 @@ class AccountLoan(models.Model):
         required=True,
         default=0.0,
         digits=(8, 6),
+        string="Discount Rate",
         help="Currently applied rate",
         track_visibility="always",
     )

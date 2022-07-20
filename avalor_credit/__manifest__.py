@@ -12,7 +12,7 @@
     'depends': [
         'base',
         'account',
-        'open_api',
+        'openapi',
         'base_api',
         'account_loan',
     ],

@@ -21,7 +21,8 @@
 
 <!--                         attrs="{'invisible': [ ('state', '!=', 'posted')]}"-->
                      </xpath>
-                     <xpath expr="//sheet" position="inside">
+                     <xpath expr="//sheet" position="replace">
+                         <sheet>
                         <div class="oe_button_box">
                         <button
                             name="view_account_moves"
@@ -40,42 +41,14 @@
                             string="Invoices"
                         />
                         <button
-                            name="%(account_loan_pay_amount_action)d"
+                            name="%(account_loan.account_loan_pay_amount_action)d"
                             class="oe_stat_button"
                             icon="fa-usd"
                             attrs="{'invisible': [('state', '!=', 'posted')]}"
                             type="action"
                             string="Pay amount"
                         />
-                    </div>
-                        <h1>
-                            <field name="name" />
-                        </h1>
-                         <group name="bloque_1">
-                             <group name="cliente">
-                                 <field name="id_prestamo" />
-                                 <field name="partner_id" />
-                                 <field name="loan_type" />
-
-                             </group>
-                             <group name="seguimiento">
-
-                             </group>
-                         </group>
-
-                     </xpath>
-                </field>
-        </record>
-
-        <record id="av_account_loan" model="ir.ui.view">
-                <field name="name">account.loan.av.form</field>
-                <field name="model">account.loan</field>
-                <field name="inherit_id" ref="account_loan.account_loan_form"/>
-
-                <field name="arch" type="xml">
-                     <xpath expr="//div[@class='oe_button_box']" position="inside">
-
-                         <button name="firmado_clip" class="oe_stat_button" icon="fa-file-text"
+                            <button name="firmado_clip" class="oe_stat_button" icon="fa-file-text"
                             string="Contrato Firmado"  type="object"/>
                          <button name="apagar_clip" class="oe_stat_button" icon="fa-file-text"
                             string="A Desembolso"  type="object"/>
@@ -99,10 +72,186 @@
                                 <span class="o_stat_text">Pagos</span>
                             </div>
                         </button>
+                    </div>
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                         <group name="bloque_1">
+                             <group name="cliente">
+                                 <field name="id_prestamo" />
+                                 <field name="partner_id" />
+                                 <field name="loan_type" />
+                                 <field name="merchan" />
+                                 <field name="merchan_id" />
+                                 <field name="cuenta_clabe_stp" />
+
+                             </group>
+                             <group name="seguimiento">
+                                 <field name="clasif_seg" />
+                                 <field name="coef_seg" />
+                                 <field name="por_cobranza" />
+                                 <field name="count_dias_ult_pago" />
+                                 <field name="date_lastpay" />
+                                 <field name="days_before_pay" />
+                             </group>
+                         </group>
+
+                         <group name="bloque_monto">
+                             <group name="montos">
+                                 <field name="loan_amount" />
+                                 <field name="rate" />
+                                 <field name="total_interes" />
+                                 <field name="iva" />
+                                 <field name="pay_back" />
+                                 <field name="pay_periodo" />
+
+                             </group>
+                             <group name="tasas">
+                                 <field name="tir" />
+                                 <field name="tir_actual" />
+                                 <field name="tir_proyect" />
+                                 <field name="total_pay" />
+                                 <field name="interes_pay" />
+                                 <field name="iva_pay" />
+                             </group>
+                         </group>
+
+
+                         <group name="bloque_terminos">
+                             <group name="data">
+                                 <field name="type_periods" />
+                                 <field name="periods" />
+                                 <field name="retencion" />
+                                 <field name="fecha_contrato" />
+                                 <field name="fecha_dipersion" />
+                                 <field name="fecha_venciminto" />
+                                 <field name="tasa_mora" />
+
+                             </group>
+                             <group name="tasas">
+                                 <field name="company_id" />
+                                 <field name="start_date" />
+                                 <field name="is_leasing" attrs="{'invisible': True}" />
+
+                             </group>
+                         </group>
+
+                         <notebook>
+                        <page string="Current Cashflow" id="items">
+                            <field name="line_ids" />
+                        </page>
+                             <page string="Projected Cashflow" id="item2">
+                                <field name="line_ids" />
+                            </page>
+                             <page string="Estimated Cashflow" id="items3">
+                                <field name="line_ids" />
+                            </page>
+                             <page string="STP" id="stp">
+                                 <group>
+                                     <group>
+                                         <field name="loan_id_stp" />
+                                         <field name="ref_numerica" />
+                                         <field name="conceptoPago" />
+                                     </group>
+                                     <group>
+                                         <field name="resut_stp_json" />
+                                    </group>
+                                 </group>
+                                 <group >
+                                    <field name="estado_loan" string="">
+
+                                    <tree decoration-danger="causaDevolucion" decoration-success="accountloan_id" create="0" delete="0">
+                                        <field name="id_stp" optional="show"/>
+                                        <field name="name"/>
+                                        <field name="estado" optional="show"/>
+                                        <field name="accountloan_id" optional="hide"/>
+                                        <field name="causaDevolucion" optional="show"/>
+                                        <field name="tsLiquidacion" optional="show"/>
+                                    </tree>
+                                    </field>
+                                </group>
+                            </page>
+                             <page string="CLIP" id="clip">
+                                <group>
+                                     <group>
+                                         <field name="claveRastreo"></field>
+                                         <field name="ref_numerica" />
+                                         <field name="conceptoPago" />
+                                     </group>
+                                     <group>
+                                         <field name="loan_id_stp" />
+                                         <field name="resut_stp_json" />
+                                    </group>
+                                 </group>
+                            </page>
+                             <page string="Transaction Frecuency" id="trans">
+
+                            </page>
+                             <page string="Credit History" id="histo">
+
+                            </page>
+
+                        <page string="Accounts" id="accounting">
+                            <group>
+                                <group>
+                                    <field name="journal_id" />
+                                    <field name="short_term_loan_account_id" />
+                                    <field name="journal_type" invisible="1" />
+                                </group>
+                                <group>
+                                    <field name="long_term_loan_account_id" />
+                                    <field name="interest_expenses_account_id" />
+                                    <field name="currency_id" invisible="1" />
+                                </group>
+                            </group>
+                        </page>
+                     <!--   <page
+                            string="Leasing"
+                            id="leasing"
+                            attrs="{'invisible': [('is_leasing', '=', False)]}"
+                        >
+                            <group>
+                                <group>
+                                    <field
+                                        name="leased_asset_account_id"
+                                        attrs="{'required': [('is_leasing', '=', True)]}"
+                                    />
+                                    <field name="residual_amount" />
+                                </group>
+                                <group>
+                                    <field
+                                        name="product_id"
+                                        attrs="{'required': [('is_leasing', '=', True)]}"
+                                    />
+                                    <field
+                                        name="interests_product_id"
+                                        attrs="{'required': [('is_leasing', '=', True)]}"
+                                    />
+                                    <field name="post_invoice" />
+                                </group>
+                            </group>
+                        </page> -->
+                    </notebook>
+
+
+                         </sheet>
                      </xpath>
-                    <!-- <field name="company_id" position="before" >
+                </field>
+        </record>
+
+  <!--       <record id="av_account_loan" model="ir.ui.view">
+                <field name="name">account.loan.av.form</field>
+                <field name="model">account.loan</field>
+                <field name="inherit_id" ref="av_rempla_loand_form"/>
+
+                <field name="arch" type="xml">
+                     <xpath expr="//div[@class='oe_button_box']" position="inside">
+
+
+                     </xpath>
+                     <field name="company_id" position="before" >
                         <field name="loan_id" />
-                     </field>-->
+                     </field>
                     <field name="loan_amount" position="after" >
                         <field name="pay_periodo" />
                     </field>
@@ -143,7 +292,7 @@
                         </page>
                     </xpath>
                 </field>
-            </record>
+            </record>-->
 
 
 
