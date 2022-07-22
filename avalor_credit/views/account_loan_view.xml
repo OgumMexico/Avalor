@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_loan_inherit_id" model="ir.ui.view">
+            <field name="name">account.loan.inherit</field>
+            <field name="model">account.loan</field>
+            <field name="inherit_id" ref="account_loan.account_loan_tree"/>
+
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="replace">
+                    <tree string="Loans">
+                        <field name="id" string="Consecutivo"/>
+                        <field name="id_prestamo"/>
+                        <field name="partner_id"/>
+                        <field name="merchan_id"/>
+                        <field name="loan_amount"/>
+                        <field name="rate"/>
+                        <field name="total_interes"/>
+                        <field name="iva"/>
+                        <field name="pay_back"/>
+                        <field name="periods"/>
+                        <field name="pay_periodo"/>
+                        <field name="por_cobranza"/>
+                        <field name="fecha_contrato"/>
+                        <field name="fecha_dipersion"/>
+                        <field name="fecha_venciminto"/>
+                        <field name="days_before_pay"/>
+                        <field name="count_dias_ult_pago"/>
+                        <field name="date_lastpay"/>
+                        <field name="por_cobranza"/>
+                        <field name="name" />
+                        <field name="company_id" />
+                        <field name="is_leasing" invisible="1"/>
+                        <field name="state" />
+                    </tree>
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

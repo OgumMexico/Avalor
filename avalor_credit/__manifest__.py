@@ -25,6 +25,7 @@
         'wizard/api_wizard.xml',
         'views/actividad_economica.xml',
         'views/account_loan.xml',
+        'views/account_loan_view.xml',
         'views/res_company.xml',
     ],
     'images': ['static/description/banner.png'],
