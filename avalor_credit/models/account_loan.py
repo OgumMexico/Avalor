@@ -60,6 +60,34 @@ def monthdelta(date, delta):
 class account_loan_integration(models.Model):
     _inherit = 'account.loan'
 
+
+
+    company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.company, readonly=True,)
+    # # company_dependent_value_ex = fields.Char(company_dependent=True)
+    #
+    journal_id = fields.Many2one(
+        "account.journal",
+        check_company=True,
+        required=True,
+        readonly=True,
+        domain="[('company_id', '=', company_id)]",
+        states={"draft": [("readonly", False)]},
+
+    )
+
+    @api.model
+    def _get_default_journal(self):
+        # self._compute_company_id()
+        company_id = self._context.get('force_company', self._context.get('default_company_id', self.env.company.id))
+        journal_type = 'general'
+        domain = [('company_id', '=', company_id), ('type', '=', journal_type)]
+
+        journal_id = self.env["account.journal"].search(
+            domain
+
+        )
+        return journal_id
+
     # rate = fields.Float(required=True, readonly=True, digits=(8, 6), )
     rate = fields.Float(required=True, string="Discount Rate")
     rate_period = fields.Float(

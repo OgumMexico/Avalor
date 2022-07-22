@@ -7,6 +7,11 @@
         <field name="name">account.loan.tree</field>
         <field name="model">account.loan</field>
         <field name="arch" type="xml">
+<!--            <filter string="company" position="after">-->
+
+<!--                <filter string="company" name="company" domain="['|',('company_id','=',False),('company_id', 'in', company_ids)]"/>-->
+
+<!--                </filter>-->
             <tree string="Loans">
                 <field name="name" />
                 <field name="company_id" />
@@ -151,6 +156,7 @@
         <field name="name">account.loan.line.tree</field>
         <field name="model">account.loan.line</field>
         <field name="arch" type="xml">
+
             <tree string="Loan items" create="0">
                 <field name="sequence" />
                 <field name="date" />
@@ -225,8 +231,27 @@
     />
     <act_window id="account_loan_action" name="Loans"
                 res_model="account.loan" />
+
+    <record id="action_loand_type" model="ir.actions.act_window">
+            <field name="name">Credits</field>
+            <field name="res_model">account.loan</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="account_loan_tree"/>
+
+<!--            <field name="domain">['|',('company_id','=',False),('company_id', '=', base.main_company)]</field>-->
+
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Register a new credits
+              </p><p>
+
+              </p>
+            </field>
+        </record>
+
+
     <menuitem id="account_loan_submenu"
-              name="Prestamo"
+              name="Credits"
               parent="account_loan.account_loan_menu" sequence="0"
               action="account_loan_action"
     />
@@ -235,7 +260,7 @@
         <field name="name">Loans</field>
         <field name="model_id" ref="model_account_loan"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)] </field>
     </record>
 
 </odoo>

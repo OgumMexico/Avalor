@@ -19,6 +19,7 @@
     'data': [
         "data/ir_sequence_data.xml",
         'security/ir.model.access.csv',
+        'security/loan.xml',
         'views/res_partner.xml',
         'views/api_credit.xml',
         'views/clip_preapproval.xml',

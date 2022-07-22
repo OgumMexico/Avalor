@@ -40,12 +40,11 @@ class AccountLoan(models.Model):
     def _get_default_journal(self):
         # self._compute_company_id()
         company_id = self._context.get('force_company', self._context.get('default_company_id', self.env.company.id))
+        journal_type = 'general'
+        domain = [('company_id', '=', company_id), ('type', '=', journal_type)]
 
         journal_id = self.env["account.journal"].search(
-            [
-                ("company_id", "=", company_id),
-
-            ]
+            domain
 
         )
         return journal_id
@@ -72,8 +71,7 @@ class AccountLoan(models.Model):
     company_id = fields.Many2one(
         "res.company",
         required=True,
-        compute='_compute_company_id',
-        default=_get_default__company_id,
+        default=lambda self: self.env.company,
         readonly=True,
 
     )
@@ -347,10 +345,10 @@ class AccountLoan(models.Model):
     @api.depends("is_leasing")
     def _compute_journal_type(self):
         for record in self:
-            if record.is_leasing:
-                record.journal_type = "purchase"
-            else:
-                record.journal_type = "general"
+            # if record.is_leasing:
+            #     record.journal_type = "purchase"
+            # else:
+            record.journal_type = "general"
 
     @api.onchange("is_leasing")
     def _onchange_is_leasing(self):
